@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>简单留言板</title>
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<div class="container">
+    <h3 class="text-center">简单留言板</h3>
+    <div class="row">
+        <div class="col-sm-10 col-sm-offset-1" style="margin-top: 30px">
+            <textarea id="content" class="form-control" placeholder="说点什么吧..." rows="5"></textarea>
+            <input id="nickname" type="text" class="form-control" style="margin-top: 10px" placeholder="昵称">
+            <button id="submit" type="button" style="margin-top: 10px" class="btn btn-primary btn-block">留言</button>
+        </div>
+        <div class="col-sm-10 col-sm-offset-1" style="margin-top: 30px">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#home">最新留言</a></li>
+                <li role="presentation"><a href="#praise">最赞留言</a></li>
+            </ul>
+            <div class="tab-content" style="margin-top: 20px">
+                <div style="margin-top: 10px;height: 170px">
+                    <div class="col-sm-2 text-center">
+                        <img style="max-width: 100%;max-height: 125px" class="img-circle" src="http://img2.touxiang.cn/file/20170508/923943874169f289308c28e8f83a928b.jpg">
+                        <strong style="display: block;margin-top: 5px">昵称</strong>
+                    </div>
+                    <div class="col-sm-10">
+                        <p style="min-height: 120px;padding: 5px">
+                            内容
+                        </p>
+                        <div class="text-right" style="margin-top: 5px">
+                            <a href="#">赞(0)</a>
+                            <span style="margin-left: 10px;color: #cccccc">2017-12-12 16:59</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center" style="margin-top: 30px">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li>
+                            <a href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li>
+                            <a href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="text-center" style="margin-top: 30px">
+                © <a href="https://4xx.me" target="_blank">For XX</a> 提供技术支持
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="//apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+</body>
+</html>

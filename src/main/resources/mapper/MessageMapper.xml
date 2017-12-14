@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.forxx.springboot4kt.dao.MessageMapper">
+  <resultMap id="BaseResultMap" type="me.forxx.springboot4kt.model.Message">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nick_name" />
+    <result column="face" jdbcType="VARCHAR" property="face" />
+    <result column="praise" jdbcType="INTEGER" property="praise" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="add_time" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="me.forxx.springboot4kt.model.Message">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, nick_name, face, praise, add_time
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from message
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from message
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="me.forxx.springboot4kt.model.Message">
+    insert into message (id, nick_name, face, 
+      praise, add_time, content
+      )
+    values (#{id,jdbcType=INTEGER}, #{nick_name,jdbcType=VARCHAR}, #{face,jdbcType=VARCHAR}, 
+      #{praise,jdbcType=INTEGER}, #{add_time,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="me.forxx.springboot4kt.model.Message">
+    insert into message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="nick_name != null">
+        nick_name,
+      </if>
+      <if test="face != null">
+        face,
+      </if>
+      <if test="praise != null">
+        praise,
+      </if>
+      <if test="add_time != null">
+        add_time,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="nick_name != null">
+        #{nick_name,jdbcType=VARCHAR},
+      </if>
+      <if test="face != null">
+        #{face,jdbcType=VARCHAR},
+      </if>
+      <if test="praise != null">
+        #{praise,jdbcType=INTEGER},
+      </if>
+      <if test="add_time != null">
+        #{add_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="me.forxx.springboot4kt.model.Message">
+    update message
+    <set>
+      <if test="nick_name != null">
+        nick_name = #{nick_name,jdbcType=VARCHAR},
+      </if>
+      <if test="face != null">
+        face = #{face,jdbcType=VARCHAR},
+      </if>
+      <if test="praise != null">
+        praise = #{praise,jdbcType=INTEGER},
+      </if>
+      <if test="add_time != null">
+        add_time = #{add_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="me.forxx.springboot4kt.model.Message">
+    update message
+    set nick_name = #{nick_name,jdbcType=VARCHAR},
+      face = #{face,jdbcType=VARCHAR},
+      praise = #{praise,jdbcType=INTEGER},
+      add_time = #{add_time,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.forxx.springboot4kt.model.Message">
+    update message
+    set nick_name = #{nick_name,jdbcType=VARCHAR},
+      face = #{face,jdbcType=VARCHAR},
+      praise = #{praise,jdbcType=INTEGER},
+      add_time = #{add_time,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectCountByMap" parameterType="map" resultType="int">
+    select count(*) from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  </if><if test="dynamicTableName == null or dynamicTableName == ''"> message</if> <include refid="Base_Query_Map_Condition" /> 
+  </select>
+  <select id="selectByMap" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />,<include refid="Blob_Column_List" /> from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  </if><if test="dynamicTableName == null or dynamicTableName == ''"> message</if> <include refid="Base_Query_Map_Condition" />
+  </select>
+  <select id="selectListByMap" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />,<include refid="Blob_Column_List" /> from  <if test="dynamicTableName != null and dynamicTableName != ''"> ${dynamicTableName}  </if><if test="dynamicTableName == null or dynamicTableName == ''"> message</if> <include refid="Base_Query_Map_Condition" />
+  </select>
+  <sql id="Base_Query_Map_Condition">
+    <trim prefix="where" prefixOverrides="and | or">
+      <if test="id != null and id != ''">
+         AND id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="nick_name != null and nick_name != ''">
+         AND nick_name = #{nick_name,jdbcType=VARCHAR}
+      </if>
+      <if test="face != null and face != ''">
+         AND face = #{face,jdbcType=VARCHAR}
+      </if>
+      <if test="praise != null and praise != ''">
+         AND praise = #{praise,jdbcType=INTEGER}
+      </if>
+      <if test="add_time != null and add_time != ''">
+         AND add_time = #{add_time,jdbcType=TIMESTAMP}
+      </if>
+      <if test="content != null and content != ''">
+         AND content = #{content,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="myLike_id != null and myLike_id != ''">
+         AND id like CONCAT('%', #{myLike_id,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_nick_name != null and myLike_nick_name != ''">
+         AND nick_name like CONCAT('%', #{myLike_nick_name,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_face != null and myLike_face != ''">
+         AND face like CONCAT('%', #{myLike_face,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLike_praise != null and myLike_praise != ''">
+         AND praise like CONCAT('%', #{myLike_praise,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLike_add_time != null and myLike_add_time != ''">
+         AND add_time like CONCAT('%', #{myLike_add_time,jdbcType=TIMESTAMP},'%' )
+      </if>
+      <if test="myLike_content != null and myLike_content != ''">
+         AND content like CONCAT('%', #{myLike_content,jdbcType=LONGVARCHAR},'%' )
+      </if>
+      <if test="myLikeStart_id != null and myLikeStart_id != ''">
+         AND id like CONCAT('%', #{myLikeStart_id,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_nick_name != null and myLikeStart_nick_name != ''">
+         AND nick_name like CONCAT('%', #{myLikeStart_nick_name,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_face != null and myLikeStart_face != ''">
+         AND face like CONCAT('%', #{myLikeStart_face,jdbcType=VARCHAR})
+      </if>
+      <if test="myLikeStart_praise != null and myLikeStart_praise != ''">
+         AND praise like CONCAT('%', #{myLikeStart_praise,jdbcType=INTEGER})
+      </if>
+      <if test="myLikeStart_add_time != null and myLikeStart_add_time != ''">
+         AND add_time like CONCAT('%', #{myLikeStart_add_time,jdbcType=TIMESTAMP})
+      </if>
+      <if test="myLikeStart_content != null and myLikeStart_content != ''">
+         AND content like CONCAT('%', #{myLikeStart_content,jdbcType=LONGVARCHAR})
+      </if>
+      <if test="myLikeEnd_id != null and myLikeEnd_id != ''">
+         AND id like CONCAT( #{myLikeEnd_id,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_nick_name != null and myLikeEnd_nick_name != ''">
+         AND nick_name like CONCAT( #{myLikeEnd_nick_name,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_face != null and myLikeEnd_face != ''">
+         AND face like CONCAT( #{myLikeEnd_face,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="myLikeEnd_praise != null and myLikeEnd_praise != ''">
+         AND praise like CONCAT( #{myLikeEnd_praise,jdbcType=INTEGER},'%' )
+      </if>
+      <if test="myLikeEnd_add_time != null and myLikeEnd_add_time != ''">
+         AND add_time like CONCAT( #{myLikeEnd_add_time,jdbcType=TIMESTAMP},'%' )
+      </if>
+      <if test="myLikeEnd_content != null and myLikeEnd_content != ''">
+         AND content like CONCAT( #{myLikeEnd_content,jdbcType=LONGVARCHAR},'%' )
+      </if>
+      <if test="myIn_id != null and myIn_id != ''">
+         AND id in <foreach item="item" index="index" collection="myIn_id" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_nick_name != null and myIn_nick_name != ''">
+         AND nick_name in <foreach item="item" index="index" collection="myIn_nick_name" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_face != null and myIn_face != ''">
+         AND face in <foreach item="item" index="index" collection="myIn_face" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_praise != null and myIn_praise != ''">
+         AND praise in <foreach item="item" index="index" collection="myIn_praise" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_add_time != null and myIn_add_time != ''">
+         AND add_time in <foreach item="item" index="index" collection="myIn_add_time" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+      <if test="myIn_content != null and myIn_content != ''">
+         AND content in <foreach item="item" index="index" collection="myIn_content" open="(" separator="," close=")"> #{item} </foreach>
+      </if>
+    </trim>
+    <if test="sorts == 'time'">
+      ORDER BY add_time DESC
+    </if>
+    <if test="sorts == 'praise'">
+      ORDER BY praise DESC
+    </if>
+  </sql>
+</mapper>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="OFF" debug="off" monitorInterval="1800">
+    <Properties>
+        <property name="LOG_HOME_ERROR">/data/logs/</property>
+        <property name="FILE_NAME_ERROR">springboot4kt_logs_error</property>
+        <property name="LOG_HOME_INFO">/data/logs/</property>
+        <property name="FILE_NAME_INFO">springboot4kt_logs</property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <!-- 输出日志的格式 -->
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+
+        <RollingFile name="app_info" fileName="${LOG_HOME_INFO}/${FILE_NAME_INFO}.log" immediateFlush="false" filePattern="${LOG_HOME_INFO}/$${date:yyyy-MM}/${FILE_NAME_INFO}-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} %L %M - %msg%xEx%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="6" modulate="true" />
+                <SizeBasedTriggeringPolicy size="50 MB"/>
+            </Policies>
+            <Filters>
+                <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY" />
+            </Filters>
+            <DefaultRolloverStrategy max="50"/>
+        </RollingFile>
+
+        <RollingFile name="app_error" fileName="${LOG_HOME_ERROR}/${FILE_NAME_ERROR}.log" immediateFlush="false" filePattern="${LOG_HOME_ERROR}/$${date:yyyy-MM}/${FILE_NAME_ERROR}-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} %L %M - %msg%xEx%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="6" modulate="true" />
+                <SizeBasedTriggeringPolicy size="50 MB"/>
+            </Policies>
+            <Filters>
+                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY" />
+            </Filters>
+            <DefaultRolloverStrategy max="50"/>
+        </RollingFile>
+
+    </Appenders>
+    <Loggers>
+        <Logger name="org.springframework" level="error" additivity="false">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="app_error"/>
+        </Logger>
+        <Logger name="org.apache.ibatis" level="error" additivity="false">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="app_error"/>
+        </Logger>
+        <Logger name="org.mybatis" level="error" additivity="false">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="app_error"/>
+        </Logger>
+        <Logger name="me.forxx.springboot4kt" level="debug" additivity="false">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="app_info"/>
+        </Logger>
+        <!-- AsyncRoot - 异步记录日志 - 需要LMAX Disruptor的支持 -->
+        <AsyncRoot level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="app_info"/>
+            <AppenderRef ref="app_error"/>
+        </AsyncRoot>
+
+    </Loggers>
+</configuration>
